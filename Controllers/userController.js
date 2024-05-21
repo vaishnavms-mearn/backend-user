@@ -37,7 +37,7 @@ exports.register = async (req, res) => {
       });
     });
   } catch (err) {
-    console.error("Unexpected error:", err); 
+    console.error("Unexpected error:", err);
     res.status(500).send("Server error");
   }
 };
@@ -162,7 +162,7 @@ exports.resetPassword = async (req, res) => {
     const mailOptions = {
       to: email,
       subject: "Password Reset",
-      text: `You requested a password reset. Click the link to reset your password: http://localhost:3001/reset-password/${token}`,
+      text: `You requested a password reset. Click the link to reset your password: http://ec2-18-209-11-214.compute-1.amazonaws.com:4001/reset-password/${token}`,
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
