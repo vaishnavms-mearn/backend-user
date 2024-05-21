@@ -1,26 +1,45 @@
-//import express
-const express =require('express')
-//import route
-const router =require('./Router/route')
-//import cors
-const cors =require('cors')
-//db connection import
-const db=require('./DB/connection')
-//create a backend server using express
-const pfServer=express()
-pfServer.use(cors())
-pfServer.use(express.json())//Returns midddleware that only parses json
-// pfServer.use(appMiddleware)
-pfServer.use(router)
-pfServer.use('/uploads',express.static('./uploads'))
-//port creation
-const PORT= 4001
-//server listen
-pfServer.listen(PORT, '0.0.0.0',()=>{
-    console.log('Listening on port ' +PORT);
-})
+// Import express
+const express = require('express');
 
-//http=get resolving to http :// localhost/4000
-pfServer.get("/",(req,res)=>{
-res.send('<h1>user is started</h1>')
-})
+// Import route
+const router = require('./Router/route');
+
+// Import cors
+const cors = require('cors');
+
+// Import db connection
+const db = require('./DB/connection');
+
+// Create a backend server using express
+const pfServer = express();
+
+// Use cors middleware
+pfServer.use(cors());
+
+// Returns middleware that only parses JSON
+pfServer.use(express.json());
+
+// Use router
+pfServer.use(router);
+
+// Serve static files from the 'uploads' directory
+pfServer.use('/uploads', express.static('./uploads'));
+
+// Define the port
+const PORT = 4001;
+
+// Root route
+pfServer.get("/", (req, res) => {
+    res.send('<h1>Server is started</h1>');
+});
+
+// Error handling middleware
+pfServer.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+});
+
+// Server listen
+pfServer.listen(PORT, () => {
+    console.log('Listening on port ' + PORT);
+});
